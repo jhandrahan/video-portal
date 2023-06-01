@@ -37,13 +37,17 @@ export default {
   //await only works inside aysnc functions. async makes JS wait until that promise settles and returns its result
   //await literally suspends the function execution until the problem is settled and then resumes with the promise result
     handleNewTerm: async function(searchInput){
-      const response = await fetch('https://pixabay.com/api/videos/?' + 
-      new URLSearchParams({
-        key: API_KEY,
-        q: searchInput
-      }))
-      const data = response.json()
-      this.videos = data.hits;
+      const response = await fetch(
+        "https://pixabay.com/api/videos/?" + 
+          new URLSearchParams({
+            key: API_KEY,
+            q: searchInput,
+            })
+          );
+          //FYI without the await before the response.json() promise will be pending...
+          const data = await response.json()
+          this.videos = data.hits;
+          console.log(this.videos)
     },
   },
 };
